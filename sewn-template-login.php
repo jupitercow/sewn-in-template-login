@@ -9,7 +9,7 @@
  * Plugin Name:       Sewn In Template Log In
  * Plugin URI:        https://wordpress.org/plugins/sewn-in-template-login/
  * Description:       Add log in form to a page template. Moves everything to a page template.
- * Version:           1.1.0
+ * Version:           1.1.1
  * Author:            Jupitercow
  * Author URI:        http://Jupitercow.com/
  * Contributor:       Jake Snyder
@@ -92,7 +92,7 @@ class Sewn_Login
 	{
 		$this->prefix      = 'sewn';
 		$this->plugin_name = strtolower(__CLASS__);
-		$this->version     = '1.1.0';
+		$this->version     = '1.1.1';
 		$this->settings    = array(
 			'loaded'   => false,
 			'pages'    => array(
@@ -333,7 +333,7 @@ class Sewn_Login
 	{
 		if ( is_page($this->settings['pages']['login']['page_name']) && is_user_logged_in() )
 		{
-			$redirect = false;#home_url('/');
+			$redirect = get_edit_user_link();
 			if ( $logged_in_redirect = apply_filters( "{$this->prefix}/login/logged_in_redirect", false ) )
 			{
 				if ( is_numeric($logged_in_redirect) ) {

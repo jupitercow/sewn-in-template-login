@@ -3,8 +3,8 @@ Contributors: jcow, ekaj
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=jacobsnyder%40gmail%2ecom&lc=US&item_name=Jacob%20Snyder&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted
 Tags: log in, login, template login, themed login
 Requires at least: 3.6.1
-Tested up to: 4.2.2
-Stable tag: 1.1.0
+Tested up to: 4.3
+Stable tag: 1.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -22,7 +22,7 @@ Controls where logged in users go when they login or when they visit the '/login
 
 `
 // Redirect using post id
-add_filter( 'sewn_login/logged_in_redirect', 'custom_sewn_logged_in_redirect_id' );
+add_filter( 'sewn/login/logged_in_redirect', 'custom_sewn_logged_in_redirect_id' );
 function custom_sewn_logged_in_redirect_id()
 {
 	return 4;
@@ -31,16 +31,16 @@ function custom_sewn_logged_in_redirect_id()
 
 `
 // Redirect using post slug
-add_filter( 'sewn_login/logged_in_redirect', 'custom_sewn_logged_in_redirect_slug' );
+add_filter( 'sewn/login/logged_in_redirect', 'custom_sewn_logged_in_redirect_slug' );
 function custom_sewn_logged_in_redirect_slug()
 {
 	return 'post-slug';
 }
-'
+`
 
-## Sewn In Notification Box Support
+= Sewn In Notification Box Support =
 
-If you install the Sewn In Notification Box, this plugin will start using that. This is handy to keep all of your notifications in a centralized location.
+If you install the <a href="https://wordpress.org/plugins/sewn-in-notifications/">Sewn In Notification Box</a>, this plugin will start using that. This is handy to keep all of your notifications in a centralized location.
 
 == Installation ==
 
@@ -55,8 +55,13 @@ If you install the Sewn In Notification Box, this plugin will start using that. 
 == Screenshots ==
 
 1. A log in form example
+2. Password recovery form
 
 == Changelog ==
+
+= 1.1.1 - 2015-08-25 =
+
+- Changed the default redirect to standard profile
 
 = 1.1.0 - 2015-06-12 =
 
@@ -64,6 +69,9 @@ If you install the Sewn In Notification Box, this plugin will start using that. 
 
 
 == Upgrade Notice ==
+
+= 1.1.1 =
+The new version changes the default redirect for "/login/" page to the user's profile, this can be overridden using this filter: add_filter( 'sewn/login/logged_in_redirect', 'custom_sewn_logged_in_redirect_slug' ); Look at the plugin page for more info.
 
 = 1.1.0 =
 This is the first version in the Wordpress repository.

@@ -10,7 +10,7 @@ Controls where logged in users go when they login or when they visit the '/login
 
 ```php
 // Redirect using post id
-add_filter( 'sewn_login/logged_in_redirect', 'custom_sewn_logged_in_redirect_id' );
+add_filter( 'sewn/login/logged_in_redirect', 'custom_sewn_logged_in_redirect_id' );
 function custom_sewn_logged_in_redirect_id()
 {
 	return 4;
@@ -19,7 +19,7 @@ function custom_sewn_logged_in_redirect_id()
 
 ```php
 // Redirect using post slug
-add_filter( 'sewn_login/logged_in_redirect', 'custom_sewn_logged_in_redirect_slug' );
+add_filter( 'sewn/login/logged_in_redirect', 'custom_sewn_logged_in_redirect_slug' );
 function custom_sewn_logged_in_redirect_slug()
 {
 	return 'post-slug';
