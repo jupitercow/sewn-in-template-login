@@ -3,8 +3,8 @@ Contributors: jcow, ekaj
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=jacobsnyder%40gmail%2ecom&lc=US&item_name=Jacob%20Snyder&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted
 Tags: log in, login, template login, themed login
 Requires at least: 3.6.1
-Tested up to: 4.3
-Stable tag: 1.1.1
+Tested up to: 4.3.1
+Stable tag: 1.1.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -59,6 +59,10 @@ If you install the <a href="https://wordpress.org/plugins/sewn-in-notifications/
 
 == Changelog ==
 
+= 1.1.2 - 2015-08-25 =
+
+- Updated redirect to check post id, then post slug, then just use the string outright.
+
 = 1.1.1 - 2015-08-25 =
 
 - Changed the default redirect to standard profile
@@ -69,6 +73,9 @@ If you install the <a href="https://wordpress.org/plugins/sewn-in-notifications/
 
 
 == Upgrade Notice ==
+
+= 1.1.2 =
+Updated redirect to check post id, then post slug, then just use the string outright.
 
 = 1.1.1 =
 The new version changes the default redirect for "/login/" page to the user's profile, this can be overridden using this filter: add_filter( 'sewn/login/logged_in_redirect', 'custom_sewn_logged_in_redirect_slug' ); Look at the plugin page for more info.
