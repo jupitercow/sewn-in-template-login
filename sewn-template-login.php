@@ -9,7 +9,7 @@
  * Plugin Name:       Sewn In Template Log In
  * Plugin URI:        https://wordpress.org/plugins/sewn-in-template-login/
  * Description:       Add log in form to a page template. Moves everything to a page template.
- * Version:           1.1.2
+ * Version:           1.1.3
  * Author:            Jupitercow
  * Author URI:        http://Jupitercow.com/
  * Contributor:       Jake Snyder
@@ -25,7 +25,7 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 $class_name = 'Sewn_Login';
-if (! class_exists($class_name) ) :
+if ( ! class_exists($class_name) ) :
 
 class Sewn_Login
 {
@@ -214,7 +214,7 @@ class Sewn_Login
 		#add_action( 'login_head',                       array($this, 'redirect_wp_login'), 1 );
 		add_filter( 'shake_error_codes',                array($this, 'redirect_wp_login') );
 
-		add_filter( 'login_url',                        array($this, 'new_login_url'), 10, 2 );
+		add_filter( 'login_url',                        array($this, 'new_login_url'), 10, 3 );
 		add_action( 'wp_login_failed',                  array($this, 'login_failed'), 10, 2 );
 		add_filter( 'lostpassword_url',                 array($this, 'lostpassword_url'), 10, 2 );
 
@@ -263,7 +263,7 @@ class Sewn_Login
 		global $wp, $wp_query;
 
 		// Check if the requested page matches our target, and no posts have been retrieved
-		if ( (! $posts || 1 < count($posts)) && array_key_exists(strtolower($wp->request), $this->settings['pages']) )
+		if ( ( ! $posts || 1 < count($posts)) && array_key_exists(strtolower($wp->request), $this->settings['pages']) )
 		{
 			// Add the fake post
 			$posts   = array();
@@ -406,13 +406,13 @@ class Sewn_Login
 		$messages           = '';
 		$password_form      = false;
 		$show_password_form = array('password','passworderror');
-		if (! $args ) { $args = array(); }
+		if ( ! $args ) { $args = array(); }
 
-		if (! empty($_REQUEST['action']) )
+		if ( ! empty($_REQUEST['action']) )
 		{
 			$action = $_REQUEST['action'];
-			if (! apply_filters( "{$this->prefix}/login/use_sewn_notifications", true ) && apply_filters( "{$this->prefix}/login/show_messages", true ) ) {
-				$messages = (! empty($this->settings['messages'][$action]['message']) ) ? $this->settings['messages'][$action]['message'] : '';
+			if ( ! apply_filters( "{$this->prefix}/login/use_sewn_notifications", true ) && apply_filters( "{$this->prefix}/login/show_messages", true ) ) {
+				$messages = ( ! empty($this->settings['messages'][$action]['message']) ) ? $this->settings['messages'][$action]['message'] : '';
 			}
 
 			if ( in_array(trim($action), $show_password_form) ) {
@@ -421,7 +421,7 @@ class Sewn_Login
 		}
 
 		ob_start();
-		if (! empty($password_form) ) : ?>
+		if ( ! empty($password_form) ) : ?>
 
 			<article id="content_page" <?php post_class('clearfix'); ?> role="article">
 				<header class="article-header">
@@ -451,9 +451,9 @@ class Sewn_Login
 			}
 
 			// If an email or username has been sent, fill it in
-			if (! empty($_REQUEST['username']) ) {
+			if ( ! empty($_REQUEST['username']) ) {
 				$args['value_username'] = esc_attr( $_REQUEST['username'] );
-			} elseif (! empty($_REQUEST['email']) ) {
+			} elseif ( ! empty($_REQUEST['email']) ) {
 				$args['value_username'] = esc_attr( $_REQUEST['email'] );
 			}
 
@@ -510,7 +510,7 @@ class Sewn_Login
 		{
 			$redirect_url = $this->new_login_url();
 
-			if (! empty($_REQUEST['action']) )
+			if ( ! empty($_REQUEST['action']) )
 			{
 				if ( 'rp' == $_REQUEST['action'] || 'resetpass' == $_REQUEST['action'] ) {
 					return;
@@ -521,7 +521,7 @@ class Sewn_Login
 					if ( $page ) $redirect_url = get_permalink($page->ID);
 				}
 			}
-			elseif (! empty($_REQUEST['loggedout'])  )
+			elseif ( ! empty($_REQUEST['loggedout'])  )
 			{
 				$redirect_url = add_query_arg('action', 'loggedout', $this->new_login_url());
 			}
@@ -550,11 +550,10 @@ class Sewn_Login
 	 * @since	1.0.0
 	 * @return	void
 	 */
-	public function new_login_url( $login_url='', $redirect='' )
+	public function new_login_url( $login_url='', $redirect='', $force_reauth=false )
 	{
-		$login_url = $this->settings['login_url'];
-		if (! empty($redirect) ) {
-			$login_url = add_query_arg('redirect_to', urlencode($redirect), $login_url);
+		if ( get_permalink() !== $this->settings['login_url'] ) {
+			$login_url = str_replace(site_url('wp-login.php', 'login'), $this->settings['login_url'], $login_url);
 		}
 
 		return $login_url;

@@ -3,8 +3,8 @@ Contributors: jcow, ekaj
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=jacobsnyder%40gmail%2ecom&lc=US&item_name=Jacob%20Snyder&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted
 Tags: log in, login, template login, themed login
 Requires at least: 3.6.1
-Tested up to: 4.3.1
-Stable tag: 1.1.2
+Tested up to: 4.4
+Stable tag: 1.1.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -59,6 +59,10 @@ If you install the <a href="https://wordpress.org/plugins/sewn-in-notifications/
 
 == Changelog ==
 
+= 1.1.3 - 2015-12-20 =
+
+- In 4.4, WP changed how the log in url is added to the form action which conflicted with the plugin rewrite of login urls. Turned off the rewrite on the custom login page for now.
+
 = 1.1.2 - 2015-08-25 =
 
 - Updated redirect to check post id, then post slug, then just use the string outright.
@@ -73,6 +77,9 @@ If you install the <a href="https://wordpress.org/plugins/sewn-in-notifications/
 
 
 == Upgrade Notice ==
+
+= 1.1.3 =
+This update is required to work with 4.4.
 
 = 1.1.2 =
 Updated redirect to check post id, then post slug, then just use the string outright.
