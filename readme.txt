@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=jacob
 Tags: log in, login, template login, themed login
 Requires at least: 3.6.1
 Tested up to: 4.4
-Stable tag: 1.1.3
+Stable tag: 1.1.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -58,6 +58,10 @@ If you install the <a href="https://wordpress.org/plugins/sewn-in-notifications/
 2. Password recovery form
 
 == Changelog ==
+
+= 1.1.4 - 2015-12-21 =
+
+- Because login forms can be used on any page, and that is the goal of this plugin, we had to turn off the login url rewrite until the form action url gets fixed in next version of WordPress. This means urls will show up on the site for wp-login.php potentially, but users will still be using the /login page as the default.
 
 = 1.1.3 - 2015-12-20 =
 
