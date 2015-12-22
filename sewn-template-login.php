@@ -9,7 +9,7 @@
  * Plugin Name:       Sewn In Template Log In
  * Plugin URI:        https://wordpress.org/plugins/sewn-in-template-login/
  * Description:       Add log in form to a page template. Moves everything to a page template.
- * Version:           1.1.3
+ * Version:           1.1.4
  * Author:            Jupitercow
  * Author URI:        http://Jupitercow.com/
  * Contributor:       Jake Snyder
@@ -214,7 +214,7 @@ class Sewn_Login
 		#add_action( 'login_head',                       array($this, 'redirect_wp_login'), 1 );
 		add_filter( 'shake_error_codes',                array($this, 'redirect_wp_login') );
 
-		add_filter( 'login_url',                        array($this, 'new_login_url'), 10, 3 );
+		#add_filter( 'login_url',                        array($this, 'new_login_url'), 10, 3 );
 		add_action( 'wp_login_failed',                  array($this, 'login_failed'), 10, 2 );
 		add_filter( 'lostpassword_url',                 array($this, 'lostpassword_url'), 10, 2 );
 
@@ -421,8 +421,8 @@ class Sewn_Login
 		}
 
 		ob_start();
-		if ( ! empty($password_form) ) : ?>
-
+		if ( ! empty($password_form) ) :
+?>
 			<article id="content_page" <?php post_class('clearfix'); ?> role="article">
 				<header class="article-header">
 					<h2><?php echo $this->settings['strings']['lost_password_title']; ?></h2>
@@ -443,8 +443,8 @@ class Sewn_Login
 					</div>
 				</section>
 			</article>
-
-		<?php else :
+<?php 
+		else :
 
 			if ( empty($args['label_username']) ) {
 				$args['label_username'] = $this->settings['strings']['user_login_label'];
@@ -485,16 +485,15 @@ class Sewn_Login
 	public function password_link()
 	{
 		$output = '';
-
-		ob_start(); ?>
+		ob_start();
+?>
 		<p class="password-recover">
 			<a href="<?php echo wp_lostpassword_url( add_query_arg('action', 'recovered', $this->new_login_url()) ); ?>" title="<?php echo $this->settings['strings']['recover_link_attr_title']; ?>">
 				<?php echo apply_filters( "{$this->prefix}/login/label_lost_password", $this->settings['strings']['recover_link_text'] ); ?>
 			</a>
 		</p>
-		<?php $output = ob_get_clean();
-
-		return $output;
+<?php
+		return ob_get_clean();
 	}
 
 	/**
@@ -518,7 +517,9 @@ class Sewn_Login
 					$redirect_url = add_query_arg( 'action', 'passworderror', $this->new_login_url() );
 				} elseif ( 'register' == $_REQUEST['action'] ) {
 					$page = get_page_by_path('register');
-					if ( $page ) $redirect_url = get_permalink($page->ID);
+					if ( $page ) {
+						$redirect_url = get_permalink($page->ID);
+					}
 				}
 			}
 			elseif ( ! empty($_REQUEST['loggedout'])  )
@@ -527,7 +528,7 @@ class Sewn_Login
 			}
 
 			wp_redirect( $redirect_url );
-			exit;
+			die;
 		}
 	}
 
@@ -552,8 +553,16 @@ class Sewn_Login
 	 */
 	public function new_login_url( $login_url='', $redirect='', $force_reauth=false )
 	{
-		if ( get_permalink() !== $this->settings['login_url'] ) {
-			$login_url = str_replace(site_url('wp-login.php', 'login'), $this->settings['login_url'], $login_url);
+		#if ( get_permalink() !== $this->settings['login_url'] ) {
+			$login_url = $this->settings['login_url'];
+		#}
+
+		if ( ! empty($redirect) ) {
+			$login_url = add_query_arg('redirect_to', urlencode($redirect), $login_url);
+		}
+
+		if ( $force_reauth ) {
+			$login_url = add_query_arg('reauth', '1', $login_url);
 		}
 
 		return $login_url;
@@ -569,7 +578,6 @@ class Sewn_Login
 	public function login_failed( $username )
 	{
 		$referrer = wp_get_referer();
-
 		if ( $referrer && ! strstr($referrer, 'wp-login') && ! strstr($referrer, 'wp-admin') )
 		{
 			wp_redirect( add_query_arg('action', 'failed', $this->new_login_url()) );
